@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f8fafc">
+  <meta name="description" content="Pilotage Bluetooth BLE d'un distributeur de croquettes ESP32.">
+  <style>
+:root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17213c;background:#eff3f9;font-synthesis:none;-webkit-tap-highlight-color:transparent}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}.app-shell{max-width:540px;min-height:100svh;margin:auto;background:linear-gradient(180deg,#fefefe 0%,#f8f9fd 46%,#f6f9fd 100%);box-shadow:0 0 50px #16264415;display:flex;flex-direction:column}.topbar{height:85px;display:flex;align-items:center;justify-content:space-between;padding:15px 21px 9px;background:#fff}.brand{display:flex;align-items:center;gap:11px}.brand-icon{font-size:35px;line-height:1}.brand-name{font-size:21px;font-weight:840;letter-spacing:-.9px}.brand-name span{color:#2779fa}.brand-sub{font-size:11px;color:#9ba4b8;margin-top:3px}.icon-button{border:0;background:#eff4ff;border-radius:12px;width:42px;height:42px;font-size:26px;color:#647b9a}.main{padding:12px 21px 102px;flex:1}.connection{display:flex;align-items:center;gap:8px;background:#e8f0ff;color:#315f9f;border-radius:13px;min-height:44px;padding:9px 11px;font-size:11.5px;font-weight:700;line-height:1.2}.connection.connected{background:#ddf9e9;color:#157447}.connection.connecting{background:#fef1c6;color:#836012}.conn-circle{flex-shrink:0;width:8px;height:8px;border-radius:50%;background:#4c87ec}.connected .conn-circle{background:#18aa67}.connect-link{margin-left:auto;background:#fff;border:1px solid #cbd8ff;padding:8px 10px;border-radius:9px;color:#2563eb;font-size:11px;font-weight:700;white-space:nowrap}.connected .connect-link{color:#18744d;border-color:#b6edcf}.notice{padding:11px 13px;margin-top:12px;border:1px solid #f2c9b8;background:#fff5ed;color:#a0522d;border-radius:12px;font-size:12px}.page{display:none}.page.active{display:block}.page-heading{display:flex;align-items:center;gap:13px;margin:19px 0 17px}.section-icon{display:grid;place-items:center;width:53px;height:53px;border-radius:50%;font-size:24px;flex-shrink:0}.warm{background:#ffecdf}.blue{background:#e5f1ff;color:#267bf3}.page-heading h1{font-size:24px;letter-spacing:-.7px;margin:0 0 3px;font-weight:800}.page-heading p{font-size:12px;color:#7d8aa5;margin:0}.meal-list{display:grid;gap:12px}.panel,.meal-card,.stat-card{background:#fff;border:1px solid #e9edf4;border-radius:18px;box-shadow:0 5px 19px #17213c0a}.meal-card{padding:17px 15px}.meal-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}.meal-title{font-size:15px;font-weight:800}.meal-top-right{display:flex;align-items:center;gap:9px}.switch-label{color:#6e7c99;font-size:11px}.remove-btn{border:0;color:#9ba6b9;background:none;font-size:20px;padding:0 3px}.toggle{appearance:none;width:35px;height:20px;border-radius:999px;background:#cfd7e7;position:relative;cursor:pointer;flex-shrink:0;transition:background .2s}.toggle:checked{background:#2276f2}.toggle:before{content:"";position:absolute;width:15px;height:15px;top:2.5px;left:3px;border-radius:50%;background:white;box-shadow:0 1px 4px #0002;transition:transform .2s}.toggle:checked:before{transform:translateX(14px)}.meal-details{display:grid;grid-template-columns:1fr 1fr;gap:11px}.meal-details label{font-size:10px;color:#7e8ba2;display:block;margin-bottom:6px}.meal-details input,.field-row input{border:1px solid #e7eaf1;background:#f5f7fb;color:#162b51;border-radius:10px;padding:11px 9px;width:100%;font-weight:750;font-size:14px}.meal-details .with-icon{display:flex;gap:9px;align-items:center}.detail-icon{font-size:19px;color:#6c85a5;flex-shrink:0}.actions{display:grid;gap:10px;margin-top:17px}.button{width:100%;min-height:46px;border:0;border-radius:12px;font-size:14px;font-weight:760;transition:filter .15s,transform .12s}.button:active{transform:scale(.99)}.button:hover{filter:brightness(.98)}.button:disabled{opacity:.48;cursor:not-allowed}.button-primary{background:linear-gradient(135deg,#358aff,#1e69ec);box-shadow:0 4px 11px #3079ef1a;color:#fff}.button-pale{background:#dcecff;color:#1b6ee5}.button-danger{background:#ed5261;color:white}.button-big{height:58px;font-size:16px}.hint{font-size:11px;line-height:1.55;color:#909bb0;margin:12px 3px}.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat-card{padding:17px 14px;min-width:0;background:#fff}.stat-label{font-size:11px;color:#697b99;font-weight:670}.stat-value{font-size:26px;font-weight:810;margin:10px 0 3px;letter-spacing:-1px}.stat-value small{font-size:16px;font-weight:700}.stat-help{font-size:10.5px;color:#98a2b6}.status-ready{font-size:20px;color:#119b63}.status-busy{font-size:18px;color:#c1851f}.status-fault{font-size:18px;color:#d23b4e}.panel{padding:18px 16px;margin-bottom:13px}.control-panel{margin-top:15px}.panel-title{font-size:14px;font-weight:780;margin-bottom:14px}.stepper{display:flex;gap:11px;margin-bottom:13px;height:64px}.stepper button{background:#e0efff;border:0;border-radius:13px;min-width:69px;font-size:27px;color:#1972f6;font-weight:500}.stepper div{flex:1;display:flex;justify-content:center;align-items:center;gap:4px;background:#f3f5f9;border-radius:13px;font-size:30px;font-weight:850}.stepper small{font-size:17px}.control-panel .button+.button{margin-top:10px}.recent{display:flex;align-items:center;justify-content:space-between;color:#4b6084;font-size:13px}.minor-heading{font-size:10.5px;color:#96a2b7;margin-bottom:4px}.recent-icon{font-size:22px;color:#aab4c7}.secondary{font-size:12px;color:#71809b;line-height:1.5;margin:3px 0 12px}.panel-split{display:flex;align-items:center;justify-content:space-between;gap:10px}.panel-split .panel-title{margin-bottom:5px}.small-button{width:86px;height:42px;min-height:42px;flex-shrink:0}.field-label{display:block;font-weight:700;font-size:12px;margin:15px 0 7px}.field-row{display:flex;gap:10px}.field-row input{width:41%;min-width:0}.field-row .button{flex:1}.helper{font-size:10.5px;color:#9ba4b4;margin-top:11px;line-height:1.5}.switch-row{display:flex;justify-content:space-between;align-items:center;gap:13px;padding:13px 0;font-size:12.5px;color:#55657e}.switch-row+.switch-row{border-top:1px solid #edf0f4}.switch-row input{accent-color:#2375f6;width:18px;height:18px}.details .detail-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;font-size:12px}.details .detail-row+.detail-row{border-top:1px solid #eef1f6}.detail-row span{color:#72829d}.detail-row strong{font-weight:750;text-align:right;max-width:55%;overflow-wrap:anywhere}.text-button{color:#2377f8;background:none;border:0;font-size:11px;font-weight:740}.logs{max-height:330px;overflow-y:auto}.log-item{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-top:1px solid #f0f2f7;font-size:11.5px;line-height:1.4;color:#586a88}.log-item time{white-space:nowrap;color:#9ba6ba;font-size:10px;margin-top:1px}.log-item div{overflow-wrap:anywhere;min-width:0}.log-item code{font-size:10.2px;color:#526b90}.log-dot{flex:0 0 7px;height:7px;background:#4a97e4;border-radius:50%;margin-top:4px}.log-dot.error{background:#e85769}.log-dot.recv{background:#12a770}.log-empty{font-size:12px;color:#9ba7bc;text-align:center;padding:18px 0}.tabbar{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px max(9px,env(safe-area-inset-bottom));background:#ffffffef;border-top:1px solid #e9eef7;box-shadow:0 -4px 16px #12264a0b;backdrop-filter:blur(10px)}.tab{border:0;background:none;display:flex;align-items:center;flex-direction:column;gap:4px;color:#8390a6;font-size:10px;font-weight:630;min-height:52px;justify-content:center}.tab.active{color:#196ef0;font-weight:800}.tab-icon{font-size:22px;line-height:1.2}.toast{position:fixed;z-index:10;bottom:85px;left:50%;transform:translateX(-50%) translateY(20px);max-width:min(90vw,480px);padding:12px 16px;border-radius:13px;background:#1d2a47;color:white;font-size:12px;line-height:1.45;box-shadow:0 6px 35px #12254755;pointer-events:none;opacity:0;transition:all .2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.toast.error{background:#ae3446}@media (min-width:700px){.app-shell{margin:30px auto;min-height:790px;border-radius:30px;overflow:hidden;border:1px solid #dfe6f1}.main{min-height:650px}.tabbar{bottom:0}}@media(max-width:360px){.main{padding-left:13px;padding-right:13px}.topbar{padding-left:13px;padding-right:13px}.stepper button{min-width:55px}.field-row{flex-wrap:wrap}.field-row input{width:100%}}
+
+</style>
+  <title>CroqChat BLE – Distributeur de croquettes</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-icon" aria-hidden="true">🐱</div><div><div class="brand-name">CroqChat <span>BLE</span></div><div class="brand-sub">Distributeur connecté</div></div></div>
+      <button class="icon-button" id="refresh-btn" title="Actualiser l’état" aria-label="Actualiser l’état">↻</button>
+    </header>
+
+    <main class="main">
+      <div class="connection" id="connection-banner"><span class="conn-circle" id="conn-dot"></span><span id="connection-text">Déconnecté — connecter le distributeur</span><button class="connect-link" id="connect-btn">Connecter</button></div>
+      <div class="notice" id="notice" role="status" aria-live="polite" hidden></div>
+
+      <section class="page active" id="page-meals" aria-labelledby="meals-heading">
+        <div class="page-heading"><div class="section-icon warm">🍽️</div><div><h1 id="meals-heading">Repas</h1><p>Programmez les repas de votre chat</p></div></div>
+        <div id="meal-list" class="meal-list"></div>
+        <div class="actions"><button id="add-meal-btn" class="button button-pale">＋ &nbsp;Ajouter un repas</button><button id="save-meals-btn" class="button button-primary">▣ &nbsp;Enregistrer les repas</button></div>
+        <p class="hint">Les horaires sont sauvegardés dans l'ESP32 après connexion. Maximum 6 repas ; 1 à 200 g chacun.</p>
+      </section>
+
+      <section class="page" id="page-manual" aria-labelledby="manual-heading">
+        <div class="page-heading"><div class="section-icon blue">🐾</div><div><h1 id="manual-heading">Mode manuel</h1><p>Distribuez une portion immédiatement</p></div></div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-label">🥣 &nbsp;Poids gamelle</div><div class="stat-value"><span id="current-weight">—</span> <small>g</small></div><div class="stat-help" id="weight-help">En attente de mesure</div></div>
+          <div class="stat-card"><div class="stat-label">● &nbsp;État du système</div><div class="stat-value status-ready" id="machine-status">—</div><div class="stat-help" id="status-help">Connexion nécessaire</div></div>
+        </div>
+        <div class="panel control-panel">
+          <div class="panel-title">🥄 &nbsp;Quantité à distribuer</div>
+          <div class="stepper"><button id="portion-minus" aria-label="Diminuer de 5 grammes">−</button><div><span id="portion-value">20</span> <small>g</small></div><button id="portion-plus" aria-label="Augmenter de 5 grammes">＋</button></div>
+          <button id="dispense-btn" class="button button-primary button-big">▶ &nbsp;Distribuer</button>
+          <button id="stop-btn" class="button button-danger button-big">■ &nbsp;STOP — Arrêt moteur</button>
+        </div>
+        <div class="panel recent"><div><div class="minor-heading">Dernière distribution</div><div id="last-feed">Aucune distribution enregistrée</div></div><span class="recent-icon">↗</span></div>
+        <p class="hint">La distribution n'est autorisée que si la balance est calibrée, le système opérationnel et le capteur disponible.</p>
+      </section>
+
+      <section class="page" id="page-settings" aria-labelledby="settings-heading">
+        <div class="page-heading"><div class="section-icon blue">⚙️</div><div><h1 id="settings-heading">Configuration</h1><p>Balance et paramètres du distributeur</p></div></div>
+        <div class="panel"><div class="panel-split"><div><div class="panel-title">⚖️ &nbsp;Tare de la balance</div><p class="secondary">Retirez les croquettes, laissez la gamelle vide puis remettez la mesure à zéro.</p></div><button class="button button-primary small-button" id="tare-btn">Tarer</button></div></div>
+        <div class="panel"><div class="panel-title">🎯 &nbsp;Calibration HX711</div><p class="secondary">Après la tare, placez une masse connue sur la balance (ex. 100 g).</p><label class="field-label" for="calibration-mass">Masse de référence (g)</label><div class="field-row"><input id="calibration-mass" type="number" inputmode="decimal" min="1" max="1000" step="0.1" value="100"><button class="button button-primary" id="calibrate-btn">Calibrer</button></div><div class="helper">La masse réelle doit être posée sur la gamelle avant d'appuyer.</div></div>
+        <div class="panel"><div class="panel-title">🕒 &nbsp;Horloge de l'ESP32</div><p class="secondary" id="clock-status">Heure non synchronisée</p><button id="sync-time-btn" class="button button-pale">Synchroniser avec le téléphone</button></div>
+        <div class="panel"><div class="panel-title">🛡️ &nbsp;Sécurité moteur</div><p class="secondary">Après avoir éliminé le bourrage ou corrigé le défaut, autorisez de nouveau les distributions.</p><button id="reset-fault-btn" class="button button-pale">Acquitter le défaut</button></div>
+        <div class="panel"><div class="panel-title">🔧 &nbsp;Options</div><label class="switch-row"><span>Demander confirmation avant distribution</span><input type="checkbox" id="confirm-feed" checked></label><label class="switch-row"><span>Afficher les commandes transmises</span><input type="checkbox" id="show-protocol" checked></label></div>
+      </section>
+
+      <section class="page" id="page-info" aria-labelledby="info-heading">
+        <div class="page-heading"><div class="section-icon blue">▥</div><div><h1 id="info-heading">Diagnostic</h1><p>État et journal du système</p></div></div>
+        <div class="panel details"><div class="detail-row"><span>Connexion Bluetooth</span><strong id="diag-ble">Démo</strong></div><div class="detail-row"><span>Balance</span><strong id="diag-scale">—</strong></div><div class="detail-row"><span>Horloge</span><strong id="diag-clock">—</strong></div><div class="detail-row"><span>Défaut moteur / distribution</span><strong id="diag-fault">—</strong></div><div class="detail-row"><span>RFID du chat</span><strong id="diag-rfid">Non connecté</strong></div><div class="detail-row"><span>Firmware</span><strong>Prototype ESP32</strong></div></div>
+        <div class="panel"><div class="panel-split"><div class="panel-title">Journal des commandes BLE</div><button class="text-button" id="clear-logs-btn">Effacer</button></div><div class="logs" id="event-log" aria-live="polite"></div></div>
+        <p class="hint">Le badge détecté est affiché ci-dessus. Une déconnexion Bluetooth ne coupe pas une distribution en cours : utilisez STOP avant de déconnecter.</p>
+      </section>
+    </main>
+
+    <nav class="tabbar" aria-label="Navigation principale">
+      <button data-tab="meals" class="tab active"><span class="tab-icon">🍴</span><span>Repas</span></button>
+      <button data-tab="manual" class="tab"><span class="tab-icon">🐾</span><span>Manuel</span></button>
+      <button data-tab="settings" class="tab"><span class="tab-icon">⚙️</span><span>Réglages</span></button>
+      <button data-tab="info" class="tab"><span class="tab-icon">▥</span><span>Infos</span></button>
+    </nav>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+// Service GATT personnalisé : mêmes UUID dans include/croqchat_config.h.
+const SERVICE_UUID = '32a44c10-fdd0-4b30-bb4b-5a8900000001';
+const RX_UUID         = '32a44c10-fdd0-4b30-bb4b-5a8900000002'; // téléphone -> ESP32
+const TX_UUID         = '32a44c10-fdd0-4b30-bb4b-5a8900000003'; // ESP32 -> téléphone
+const MAX_PACKET = 18; // 18 octets ASCII + fin de ligne : compatible BLE ATT MTU=23
+
+class FeederBLE {
+  constructor(onLine, onDisconnected) {
+    Object.assign(this, {onLine, onDisconnected, device:null, rx:null, tx:null,
+      buffer:'', writeQueue:Promise.resolve(), requests:Promise.resolve(), pending:null, generation:0, requestGeneration:0});
+    this.decoder = new TextDecoder('utf-8');
+    this.encoder = new TextEncoder();
+    this.onNotify = this.onNotify.bind(this);
+    this.onGATTDisconnected = this.onGATTDisconnected.bind(this);
+  }
+  get connected() { return Boolean(this.device?.gatt?.connected && this.rx && this.tx); }
+  async connect() {
+    if (!navigator.bluetooth || !window.isSecureContext)
+      throw new Error('Ouvrez cette application en HTTPS dans Chrome Android pour utiliser le Bluetooth.');
+    this.device?.removeEventListener('gattserverdisconnected', this.onGATTDisconnected);
+    this.device = await navigator.bluetooth.requestDevice({filters:[{namePrefix:'CroqChat'}],optionalServices:[SERVICE_UUID]});
+    this.device.addEventListener('gattserverdisconnected',this.onGATTDisconnected);
+    try {
+      const server = await this.device.gatt.connect();
+      const service = await server.getPrimaryService(SERVICE_UUID);
+      this.rx = await service.getCharacteristic(RX_UUID);
+      this.tx = await service.getCharacteristic(TX_UUID);
+      this.buffer = '';
+      this.tx.addEventListener('characteristicvaluechanged',this.onNotify);
+      await this.tx.startNotifications();
+      ++this.generation;
+    } catch (error) { this.disconnect(); throw error; }
+  }
+  failPending(error) {
+    if (this.pending) { const pending=this.pending; this.pending=null; clearTimeout(pending.timer); pending.reject(error); }
+  }
+  disconnect() {
+    if(this.device?.gatt?.connected) this.device.gatt.disconnect();
+    this.onGATTDisconnected();
+  }
+  onGATTDisconnected() {
+    this.tx?.removeEventListener('characteristicvaluechanged',this.onNotify);
+    this.rx=null; this.tx=null; this.buffer=''; ++this.generation;
+    this.failPending(new Error('Connexion BLE perdue ; résultat de la commande inconnu.'));
+    this.onDisconnected?.();
+  }
+  onNotify(event) {
+    const view=event.target.value;
+    this.buffer+=this.decoder.decode(new Uint8Array(view.buffer,view.byteOffset,view.byteLength));
+    if(this.buffer.length>2048) {
+      this.buffer=''; this.failPending(new Error('Réponse Bluetooth trop longue.')); return;
+    }
+    let i;
+    while((i=this.buffer.indexOf('\n'))!==-1) {
+      const line=this.buffer.slice(0,i).replace(/\r$/,''); this.buffer=this.buffer.slice(i+1);
+      if(!line) continue;
+      this.onLine?.(line);
+      const {type,fields}=parseMessage(line), pending=this.pending;
+      if(!pending) continue;
+      if(type==='ERR' && (!fields.cmd || fields.cmd===pending.command)) {
+        this.failPending(new Error(`ESP32 : ${fields.code||'commande refus?e'}`));
+      } else if ((pending.command==='GET_STATUS' && type==='STATUS')
+          || (pending.command==='GET_MEALS' && type==='MEALS_END')
+          || (['TARE','CALIBRATE'].includes(pending.command) && type==='DONE' && fields.cmd===pending.command)
+          || (!['GET_STATUS','GET_MEALS','TARE','CALIBRATE'].includes(pending.command) && type==='ACK' && fields.cmd===pending.command)) {
+        clearTimeout(pending.timer); this.pending=null; pending.resolve(line);
+      }
+    }
+  }
+  async send(line) {
+    if(!this.connected) throw new Error('ESP32 non connecté');
+    if(!/^[\x20-\x7e]+$/.test(line) || line.length>256) throw new Error('Commande BLE invalide');
+    const generation=this.generation, rx=this.rx;
+    const operation=async()=>{
+      for(let i=0;i<(line+'\n').length;i+=MAX_PACKET) {
+        if(!this.connected || generation!==this.generation) throw new Error('Connexion BLE perdue');
+        const packet=this.encoder.encode((line+'\n').slice(i,i+MAX_PACKET));
+        if(rx.writeValueWithResponse) await rx.writeValueWithResponse(packet);
+        else await rx.writeValue(packet);
+      }
+    };
+    this.writeQueue=this.writeQueue.catch(()=>{}).then(operation);
+    return this.writeQueue;
+  }
+  request(line) {
+    const command=line.split(';')[0];
+    if(command==='STOP') {
+      ++this.requestGeneration;
+      this.failPending(new Error('Commande interrompue par STOP.'));
+    }
+    const generation=this.generation, requestGeneration=this.requestGeneration;
+    const operation=async()=>{
+      if(!this.connected || generation!==this.generation || requestGeneration!==this.requestGeneration) throw new Error('Commande annulée.');
+      return new Promise((resolve,reject)=>{
+        const timeout=['TARE','CALIBRATE'].includes(command)?15000:8000;
+        const pending={command,resolve,reject,timer:null}; this.pending=pending;
+        pending.timer=setTimeout(()=>{
+          if(this.pending!==pending)return;
+          ++this.generation;
+          this.failPending(new Error('ESP32 sans réponse ; résultat inconnu. Reconnectez le distributeur.'));
+          this.disconnect();
+        },timeout);
+        this.send(line).catch(error=>{if(this.pending===pending){this.failPending(error);this.disconnect();}});
+      });
+    };
+    this.requests=this.requests.catch(()=>{}).then(operation);
+    return this.requests;
+  }
+}
+
+function parseMessage(line) {
+  const [type, ...parts] = line.trim().split(';');
+  const fields = {};
+  for (const part of parts) {
+    const p=part.indexOf('=');
+    if (p>0) fields[part.slice(0,p)] = part.slice(p+1);
+  }
+  return {type,fields};
+}
+
+
+const safeStorage = (() => {
+  const memory = new Map();
+  return {
+    getItem(key) { try { return window.localStorage.getItem(key); } catch (_) { return memory.get(key) ?? null; } },
+    setItem(key, value) { try { window.localStorage.setItem(key,value); } catch (_) { memory.set(key,value); } }
+  };
+})();
+
+
+const $ = (id) => document.getElementById(id);
+const MAX_MEALS = 6;
+const DEMO_MEALS = [
+  {id:1,time:'08:00',mass:60,enable:true},
+  {id:2,time:'19:00',mass:55,enable:true}
+];
+function loadMeals() {
+  try {
+    const value = JSON.parse(safeStorage.getItem('croqchat.meals'));
+    return Array.isArray(value) ? value.filter(m=>Number.isInteger(m.id)&&m.id>=1&&m.id<=6&&/^([01]\d|2[0-3]):[0-5]\d$/.test(m.time)&&Number.isFinite(m.mass)&&m.mass>=1&&m.mass<=200).filter((m,i,all)=>all.findIndex(x=>x.id===m.id)===i) : [];
+  } catch {return [];}
+}
+const state = {
+  bleConnected:false, meals:loadMeals(), portion:20,
+  demoWeight:124, weight:null, busy:false, fault:0, calibrated:false, tared:false, clock:false, sensor:false,
+  rfid:'',last:null, logs:[], confirmFeed:safeStorage.getItem('croqchat.confirm')!=='false', showProtocol:true,
+  demoBusyTimer:null, pollTimer:null, haveStatus:false, lastStatus:0, scale:true, schedule:true, saving:false, loadingMeals:false, incomingMeals:null, operationResult:0
+};
+$('confirm-feed').checked = state.confirmFeed;
+let notifyTimer;
+function toast(message,error=false){const el=$('toast');el.textContent=message;el.className='toast show'+(error?' error':'');clearTimeout(notifyTimer);notifyTimer=setTimeout(()=>el.className='toast',3700);}
+function log(text,kind='info') {
+  const time=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  state.logs.unshift({time,text,kind});state.logs=state.logs.slice(0,60);renderLog();
+}
+function renderLog(){const el=$('event-log');el.replaceChildren();if (!state.logs.length){el.innerHTML='<div class="log-empty">Aucun événement</div>';return;}
+  for (const x of state.logs){const div=document.createElement('div');div.className='log-item';const dot=document.createElement('span');dot.className='log-dot '+(x.kind==='error'?'error':x.kind==='recv'?'recv':'');const date=document.createElement('time');date.textContent=x.time;const content=document.createElement('div');content.textContent=x.text;div.append(dot,date,content);el.append(div);}
+}
+function intRange(raw,min,max) { const n=Number(raw);return Number.isFinite(n)&&n>=min&&n<=max?n:null; }
+function formatNumber(n){return Number.isFinite(n)?n.toFixed(1).replace(/\.0$/,''):'—';}
+function renderMeals(){const el=$('meal-list');el.replaceChildren();if(!state.meals.length){const msg=document.createElement('p');msg.className='hint';msg.textContent='Aucun repas programmé sur le distributeur. Ajoutez votre premier repas.';el.append(msg);}for(const meal of state.meals){
+  const card=document.createElement('div');card.className='meal-card';card.dataset.mealId=String(meal.id);
+  const head=document.createElement('div');head.className='meal-top';
+  const title=document.createElement('div');title.className='meal-title';title.textContent=`Repas ${meal.id}`;
+  const right=document.createElement('div');right.className='meal-top-right';
+  const activeLabel=document.createElement('span');activeLabel.className='switch-label';activeLabel.textContent='Actif';
+  const toggle=document.createElement('input');toggle.className='toggle';toggle.type='checkbox';toggle.checked=meal.enable;toggle.setAttribute('aria-label',`Activer le repas ${meal.id}`);
+  toggle.addEventListener('change',()=>{meal.enable=toggle.checked;saveLocal();});right.append(activeLabel,toggle);
+  {const remove=document.createElement('button');remove.className='remove-btn';remove.title=`Supprimer le repas ${meal.id}`;remove.textContent='?';remove.addEventListener('click',async()=>{
+    if(state.saving)return;
+    state.saving=true;renderStatus();
+    try{await sendCommand(`DELETE_MEAL;id=${meal.id}`);state.meals=state.meals.filter(m=>m.id!==meal.id);saveLocal();renderMeals();toast('Repas supprimé sur l’ESP32');}
+    catch(error){handleError(error);}finally{state.saving=false;renderStatus();}
+  });right.append(remove);}
+
+  head.append(title,right);
+  const details=document.createElement('div');details.className='meal-details';
+  const timewrap=document.createElement('div');const labelT=document.createElement('label');labelT.textContent='Heure';labelT.htmlFor=`time-${meal.id}`;const divT=document.createElement('div');divT.className='with-icon';const it=document.createElement('span');it.className='detail-icon';it.textContent='◷';const time=document.createElement('input');time.type='time';time.id=`time-${meal.id}`;time.value=meal.time;time.addEventListener('change',()=>{meal.time=time.value||'08:00';saveLocal();});divT.append(it,time);timewrap.append(labelT,divT);
+  const masswrap=document.createElement('div');const labelM=document.createElement('label');labelM.textContent='Portion (g)';labelM.htmlFor=`mass-${meal.id}`;const divM=document.createElement('div');divM.className='with-icon';const im=document.createElement('span');im.className='detail-icon';im.textContent='▰';const mass=document.createElement('input');mass.id=`mass-${meal.id}`;mass.type='number';mass.inputMode='decimal';mass.min='1';mass.max='200';mass.step='1';mass.value=String(meal.mass);mass.addEventListener('change',()=>{meal.mass=Number(mass.value);saveLocal();});divM.append(im,mass);masswrap.append(labelM,divM);
+  details.append(timewrap,masswrap);card.append(head,details);el.append(card);
+}}
+function saveLocal(){safeStorage.setItem('croqchat.meals',JSON.stringify(state.meals));}
+function renderConnection(){const el=$('connection-banner');el.classList.toggle('connected',state.bleConnected);el.classList.toggle('connecting',false);$('connection-text').textContent=state.bleConnected?'BLE connecté — CroqChat ESP32':'Déconnecté — connecter le distributeur';$('connect-btn').textContent=state.bleConnected?'Déconnecter':'Connecter';$('diag-ble').textContent=state.bleConnected?'ESP32 connecté':'Déconnecté';}
+function renderStatus(){
+ const connected=state.bleConnected, fresh=connected&&state.haveStatus&&Date.now()-state.lastStatus<12000;
+ $('current-weight').textContent=formatNumber(fresh&&state.sensor&&state.calibrated&&state.tared?state.weight:null);
+ $('weight-help').textContent=!fresh?'En attente de mesure':!state.sensor?'Capteur absent ou mesure périmée':!state.calibrated?'Calibration requise':'Mesure après la dernière tare';
+ const ready=fresh&&state.scale&&state.sensor&&state.calibrated&&state.tared&&!state.fault&&!state.busy;
+ const stat=$('machine-status');
+ stat.className='stat-value '+(fresh&&state.fault?'status-fault':ready?'status-ready':'status-busy');
+ stat.textContent=!connected?'Déconnecté':!fresh?'Actualisation...':state.fault?'Défaut '+state.fault:state.busy?'Occupé...':ready?'Prêt':'À configurer';
+ $('status-help').textContent=!fresh?'Statut du distributeur requis':state.busy?'Tare, calibration ou distribution':state.fault?'Vérifier le syst?me':'Capteur et calibration vérifiés avant distribution';
+ $('portion-value').textContent=state.portion;
+ $('last-feed').textContent=fresh&&state.last?`${formatNumber(state.last)} g distribu?s`:'Aucune distribution confirmée';
+ $('diag-scale').textContent=!fresh?'Inconnue':!state.scale?'Désactivée':!state.sensor?'Capteur non prêt':state.calibrated&&state.tared?'Calibrée et tarée':'Étalonnage requis';
+ $('diag-clock').textContent=fresh?(state.clock?'Synchronisée':'Non synchronisée'):'Inconnue';
+ $('clock-status').textContent=fresh?(state.clock?'Horloge synchronisée (à refaire après coupure)':'Synchronisez l’ESP32 avant les repas programmés'):'Connectez l’ESP32 pour régler son horloge.';
+ const faults=['Aucun','Capteur','Calibration','Portion','Timeout moteur','Absence de d?bit','Distribution'];
+ $('diag-fault').textContent=fresh?(faults[state.fault]||'Code '+state.fault):'Inconnu';
+ $('diag-rfid').textContent=fresh?(state.rfid||'Aucun badge'):'Inconnu';
+ $('dispense-btn').disabled=!ready;
+ $('stop-btn').disabled=!connected;
+ $('tare-btn').disabled=!fresh||!state.scale||state.busy;
+ $('calibrate-btn').disabled=!fresh||!state.scale||!state.tared||!state.sensor||state.busy;
+ $('reset-fault-btn').disabled=!fresh||!state.fault||state.busy||Boolean(state.rfid);
+ $('sync-time-btn').disabled=!connected||!state.schedule;
+ const lock=!fresh||!state.schedule||state.saving||state.loadingMeals;
+ $('add-meal-btn').disabled=lock||state.meals.length>=MAX_MEALS;
+ $('save-meals-btn').disabled=lock;
+ for(const el of $('meal-list').querySelectorAll('input,button'))el.disabled=lock;
+}
+
+function openTab(tab){for(const el of document.querySelectorAll('.page'))el.classList.toggle('active',el.id===`page-${tab}`);for(const el of document.querySelectorAll('.tab'))el.classList.toggle('active',el.dataset.tab===tab);window.scrollTo({top:0,behavior:'smooth'});}
+const ble=new FeederBLE(onBleLine,()=>{state.bleConnected=false;state.haveStatus=false;state.loadingMeals=false;state.incomingMeals=null;state.weight=null;stopPolling();renderConnection();renderStatus();log('ESP32 déconnecté','error');toast('ESP32 déconnecté',true);});
+function onBleLine(line){if(state.showProtocol)log('← '+line,'recv');const {type,fields:f}=parseMessage(line);
+ if(type==='STATUS'){
+   const w=Number(f.w);state.weight=Number.isFinite(w)?w:null;state.haveStatus=true;state.lastStatus=Date.now();state.scale=f.scale!=='0';state.schedule=f.schedule!=='0';state.operationResult=Number(f.op)||0;
+   state.busy=f.busy==='1';state.fault=Number(f.fault)||0;state.sensor=f.sensor==='1';state.calibrated=f.cal==='1';state.tared=f.tare==='1';state.clock=f.clock==='1';state.rfid=f.rfid==='none'?'':f.rfid||'';
+   const last=Number(f.last);state.last=Number.isFinite(last)&&last>0?last:null;
+   renderStatus();
+ }else if(type==='MEALS_BEGIN'){state.incomingMeals=[];state.loadingMeals=true;renderStatus();
+ }else if(type==='MEALS_END'){if(state.incomingMeals){state.meals=state.incomingMeals;state.incomingMeals=null;saveLocal();}state.loadingMeals=false;renderMeals();renderStatus();
+ }else if(type==='MEAL'){
+   const id=Number(f.id);const t=f.time;const g=Number(f.mass);
+   if(state.incomingMeals&&Number.isInteger(id)&&id>=1&&id<=MAX_MEALS&&/^([01]\d|2[0-3]):[0-5]\d$/.test(t)&&Number.isFinite(g)&&g>=1&&g<=200){const meal={id,time:t,mass:g,enable:f.enable==='1'};const i=state.incomingMeals.findIndex(m=>m.id===id);if(i<0)state.incomingMeals.push(meal);else state.incomingMeals[i]=meal;state.incomingMeals.sort((a,b)=>a.id-b.id);}
+
+ }else if(type==='ACK'){/* Les requetes attendent leur resultat final. */
+ }else if(type==='ERR'){toast(`ESP32 : ${f.code||'commande refusée'}`,true);log(line,'error');
+ }else if(type==='DONE'&&f.grams!==undefined){const n=Number(f.grams);if(Number.isFinite(n))state.last=n;state.busy=false;renderStatus();toast(`Distribution terminée : ${formatNumber(n)} g`);}
+}
+async function sendCommand(line){
+ if(!state.bleConnected)throw new Error('Connectez le distributeur avant d’envoyer une commande.');
+ if(state.showProtocol)log('\u2192 '+line);
+ return ble.request(line);
+}
+
+function stopPolling(){clearInterval(state.pollTimer);state.pollTimer=null;}
+async function refresh(){if(state.bleConnected){try{await sendCommand('GET_STATUS');}catch(e){handleError(e);}}else{renderStatus();}}
+async function syncTime(){
+ const now=Math.floor(Date.now()/1000);
+ const offset=-new Date().getTimezoneOffset();
+ await sendCommand(`SET_TIME;epoch=${now};offset=${offset}`);
+ const status=await sendCommand('GET_STATUS');
+ if(parseMessage(status).fields.clock!=='1')throw new Error("L'ESP32 n'a pas confirme la synchronisation de l'heure.");
+}
+function handleError(error){toast(error.message||String(error),true);log(String(error.message||error),'error');}
+$('connect-btn').addEventListener('click',async()=>{
+ if(state.bleConnected){ble.disconnect();return;}
+ const btn=$('connect-btn');btn.disabled=true;$('connection-banner').classList.add('connecting');$('connection-text').textContent='Recherche de l’ESP32…';
+ try{stopPolling();state.haveStatus=false;await ble.connect();state.bleConnected=true;renderConnection();renderStatus();log('Connexion BLE etablie');await sendCommand('GET_STATUS');if(state.schedule){await syncTime();await sendCommand('GET_MEALS');}state.pollTimer=setInterval(()=>{renderStatus();if(state.bleConnected&&!ble.pending&&!state.saving)refresh();},3000);toast('CroqChat ESP32 connecte');}
+ catch(e){ble.disconnect();state.bleConnected=false;renderConnection();renderStatus();handleError(e);}finally{btn.disabled=false;}
+});
+$('refresh-btn').addEventListener('click',()=>refresh());
+for(const el of document.querySelectorAll('.tab'))el.addEventListener('click',()=>openTab(el.dataset.tab));
+$('add-meal-btn').addEventListener('click',()=>{if(state.meals.length>=MAX_MEALS)return toast('Maximum 6 repas',true);const used=new Set(state.meals.map(m=>m.id));const id=[1,2,3,4,5,6].find(n=>!used.has(n));state.meals.push({id,time:'12:00',mass:30,enable:true});state.meals.sort((a,b)=>a.id-b.id);saveLocal();renderMeals();});
+$('save-meals-btn').addEventListener('click',async()=>{
+ if(state.saving)return;
+ state.saving=true;renderStatus();
+ try{
+  const meals=state.meals.map(m=>({...m}));
+  for(const m of meals)if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(m.time)||intRange(m.mass,1,200)===null)throw new Error(`Repas ${m.id} : heure ou quantité invalide (1 à 200 g)`);
+  for(const m of meals)await sendCommand(`SET_MEAL;id=${m.id};time=${m.time};mass=${m.mass};enable=${m.enable?1:0}`);
+  await sendCommand('GET_MEALS');toast('Repas sauvegardés et relus sur l’ESP32');
+ }catch(e){handleError(e);}finally{state.saving=false;renderStatus();}
+});
+
+$('portion-minus').addEventListener('click',()=>{state.portion=Math.max(5,state.portion-5);renderStatus();});
+$('portion-plus').addEventListener('click',()=>{state.portion=Math.min(200,state.portion+5);renderStatus();});
+$('dispense-btn').addEventListener('click',async()=>{
+ if(state.confirmFeed && !window.confirm(`Distribuer ${state.portion} g de croquettes ${state.bleConnected?'réellement':'en démonstration'} ?`))return;
+ try{state.busy=true;renderStatus();await sendCommand(`MANUAL_FEED;mass=${state.portion}`);await refresh();}catch(e){handleError(e);}
+});
+$('stop-btn').addEventListener('click',async()=>{try{await sendCommand('STOP');await refresh();toast('Arrêt confirmé par l’ESP32');}catch(e){handleError(e);}});
+$('tare-btn').addEventListener('click',async()=>{
+ if(!window.confirm('La gamelle est-elle bien vide, stable et sans croquettes ?'))return;
+ try{state.busy=true;renderStatus();await sendCommand('TARE');await refresh();toast('Tare terminée');}catch(e){handleError(e);}
+});
+$('calibrate-btn').addEventListener('click',async()=>{
+ const mass=Number($('calibration-mass').value);if(!Number.isFinite(mass)||mass<1||mass>1000){toast('Entrez une masse de référence entre 1 et 1000 g',true);return;}
+ if(!window.confirm(`Après avoir taré la balance, as-tu posé exactement ${mass} g sur la gamelle ?`))return;
+ try{state.busy=true;renderStatus();await sendCommand(`CALIBRATE;mass_ref=${mass}`);await refresh();toast('Calibration terminée et sauvegardée');}catch(e){handleError(e);}
+});
+$('sync-time-btn').addEventListener('click',()=>syncTime().catch(handleError));
+$('reset-fault-btn').addEventListener('click',async()=>{if(!window.confirm('As-tu vérifié le moteur, la vis sans fin et la balance avant de réarmer ?'))return;try{await sendCommand('RESET_FAULT');await refresh();toast('Défaut acquitté par l’ESP32');}catch(e){handleError(e);}});
+$('confirm-feed').addEventListener('change',e=>{state.confirmFeed=e.target.checked;safeStorage.setItem('croqchat.confirm',String(state.confirmFeed));});
+$('show-protocol').addEventListener('change',e=>state.showProtocol=e.target.checked);
+$('clear-logs-btn').addEventListener('click',()=>{state.logs=[];renderLog();});
+renderMeals();renderConnection();renderStatus();renderLog();
+
+
+</script>
+</body>
+</html>
