@@ -15,6 +15,7 @@ port_serie = serial.Serial(arguments.port, 9600, timeout=0)
 # L'ouverture du port peut redemarrer un Uno ; attendre la tare initiale.
 time.sleep(3)
 port_serie.write(b"H")
+# Conserve les 120 relevés les plus récents pour borner l’historique affiché.
 points = deque(maxlen=120)
 tampon = bytearray()
 figure, axes = plt.subplots()
@@ -30,6 +31,7 @@ axes.grid(True, alpha=0.3)
 axes.set_title("Derive de la balance - attente du premier releve (1 min)")
 
 
+# Vide les octets déjà reçus et conserve le fragment d’une ligne incomplète jusqu’au prochain rafraîchissement.
 def update(_):
     tampon.extend(port_serie.read(port_serie.in_waiting))
     while b"\n" in tampon:

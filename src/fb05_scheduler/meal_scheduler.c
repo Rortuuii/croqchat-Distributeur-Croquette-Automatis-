@@ -18,6 +18,7 @@ typedef struct {
 } sauvegarde_t;
 static sauvegarde_t planning;
 static bool disponible, synchronisee;
+/* L’heure reçue en BLE sert de référence. Le compteur monotone fournit le temps écoulé depuis la synchronisation. */
 static int64_t reference_utc, reference_us, derniere_verification;
 static int16_t decalage;
 static bool echeances[CROQCHAT_MEAL_COUNT];
@@ -190,6 +191,7 @@ bool meal_scheduler_take_due(meal_t *repas)
     return false;
 }
 /* Enregistre la prise en charge pour eviter de lancer deux fois le repas. */
+/* Enregistre le jour d’exécution avant de démarrer la distribution pour éviter un second déclenchement le même jour. */
 esp_err_t meal_scheduler_claim(uint8_t identifiant)
 {
     if (!disponible || !meal_scheduler_clock_valid() || en_cours) return ESP_ERR_INVALID_STATE;

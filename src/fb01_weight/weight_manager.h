@@ -1,3 +1,4 @@
+/* Lectures brutes et calibrées, suivi de la tare et opérations de calibration. */
 /* Lecture du HX711, filtrage du poids, tare et calibration. */
 #ifndef WEIGHT_MANAGER_H
 #define WEIGHT_MANAGER_H

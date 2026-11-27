@@ -1,3 +1,4 @@
+/* Configuration partagée du matériel, des UUID BLE et des limites du distributeur. */
 #ifndef CROQCHAT_CONFIG_H
 #define CROQCHAT_CONFIG_H
 

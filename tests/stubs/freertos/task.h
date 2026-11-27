@@ -1,3 +1,4 @@
+/* Déclarations des tâches et des délais remplacés par les tests natifs. */
 #include "FreeRTOS.h"
 void vTaskDelay(TickType_t delay);
 TickType_t xTaskGetTickCount(void);

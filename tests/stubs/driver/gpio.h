@@ -1,3 +1,4 @@
+/* Types et fonctions GPIO remplacés par les tests exécutés sur PC. */
 #ifndef TEST_GPIO_H
 #define TEST_GPIO_H
 #include <stdint.h>

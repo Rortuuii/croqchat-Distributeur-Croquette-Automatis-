@@ -1,3 +1,4 @@
+// Vérifie le protocole de la page HTML avec des réponses fragmentées et des déconnexions simulées.
 // Exerce les vraies fonctions du HTML, sans navigateur ni modification de l'app.
 const fs = require('fs');
 const vm = require('vm');

@@ -1,3 +1,4 @@
+/* États et commandes d’une distribution avec suivi de la masse. */
 /* Distribution de la quantite demandee et suivi du poids. */
 #ifndef DISPENSER_CONTROLLER_H
 #define DISPENSER_CONTROLLER_H

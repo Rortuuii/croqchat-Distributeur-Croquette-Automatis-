@@ -1,3 +1,4 @@
+# Compile les modules avec leurs périphériques simulés et exécute les tests sur le PC.
 param([string]$Compiler = 'clang')
 $ErrorActionPreference = 'Stop'
 $projectDir = Split-Path -Parent $PSScriptRoot

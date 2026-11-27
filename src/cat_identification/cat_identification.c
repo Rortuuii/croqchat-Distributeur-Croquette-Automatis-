@@ -11,6 +11,7 @@
 #include "esp_timer.h"
 
 #define PORT_RFID UART_NUM_2
+/* Une lecture valide prolonge la présence pendant deux secondes, même si quelques interrogations échouent. */
 #define DELAI_PERTE_BADGE_US INT64_C(2000000)
 
 static bool uart_initialise;

@@ -20,6 +20,7 @@ static struct {
     float coefficient; /* Comptes HX711 par gramme. */
 } reglages;
 
+/* Instantané partagé. Le brut reste disponible indépendamment de la conversion en grammes. */
 static weight_snapshot_t poids;
 static portMUX_TYPE verrou = portMUX_INITIALIZER_UNLOCKED;
 static enum { REPOS, TARE, CALIBRATION } operation;
@@ -146,6 +147,7 @@ weight_snapshot_t weight_manager_get_snapshot(void)
 }
 
 /* Verifie les conditions puis prepare les mesures de tare ou de calibration. */
+/* Valide les préconditions, puis prépare la collecte des échantillons dans la boucle principale. */
 static bool demarrer(bool calibration, float masse)
 {
     if (weight_manager_is_busy() || motor_controller_is_running()) return false;
@@ -173,6 +175,7 @@ bool weight_manager_demander_calibration(float masse_reference)
 }
 
 /* Traite les mesures et fait avancer la tare ou la calibration. */
+/* Lit les conversions disponibles et fait avancer la tare ou la calibration sans attendre le prochain échantillon. */
 void weight_manager_update(void)
 {
     if (weight_manager_is_busy() && esp_timer_get_time() >= fin_operation_us) {

@@ -1,3 +1,4 @@
+/* Déclarations minimales pour les files FreeRTOS simulées. */
 #ifndef TEST_QUEUE_H
 #define TEST_QUEUE_H
 #include <stddef.h>

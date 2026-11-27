@@ -1,3 +1,4 @@
+/* Types FreeRTOS et sections critiques adaptés au banc de test natif. */
 #ifndef TEST_FREERTOS_H
 #define TEST_FREERTOS_H
 #define pdTRUE 1

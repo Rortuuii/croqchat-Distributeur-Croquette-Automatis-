@@ -1,3 +1,4 @@
+/* Défauts de sécurité et conditions de démarrage ou de réarmement. */
 /* Surveillance du moteur et blocage des distributions en cas de defaut. */
 #ifndef SAFETY_MANAGER_H
 #define SAFETY_MANAGER_H

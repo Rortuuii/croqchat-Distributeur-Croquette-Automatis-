@@ -1,3 +1,4 @@
+/* Options de démarrage et points d’entrée du coordinateur de l’application. */
 /* Coordination des modules et des modes choisis dans main.c. */
 #ifndef APP_CONTROLLER_H
 #define APP_CONTROLLER_H

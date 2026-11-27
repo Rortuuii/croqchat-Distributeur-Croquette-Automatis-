@@ -1,3 +1,4 @@
+/* Instantané du badge détecté et interface du lecteur RFID. */
 /* Lecture du badge RFID et suivi de sa presence. */
 #ifndef CAT_IDENTIFICATION_H
 #define CAT_IDENTIFICATION_H

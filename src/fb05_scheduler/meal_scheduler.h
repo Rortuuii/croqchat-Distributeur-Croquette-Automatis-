@@ -1,3 +1,4 @@
+/* Planning persistant, synchronisation de l’heure et traitement des échéances. */
 /* Gestion de l heure et des repas programmes. */
 #ifndef MEAL_SCHEDULER_H
 #define MEAL_SCHEDULER_H

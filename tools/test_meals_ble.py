@@ -14,12 +14,14 @@ RX = '32a44c10-fdd0-4b30-bb4b-5a8900000002'
 TX = '32a44c10-fdd0-4b30-bb4b-5a8900000003'
 
 
+# Abstraction du lien GATT utilisée par le test de planning.
 class Link:
     def __init__(self):
         self.buffer = bytearray()
         self.lines = asyncio.Queue()
         self.client = None
 
+    # Regroupe les notifications fragmentées en lignes et les transmet à la coroutine de commande.
     def notify(self, _sender, data):
         self.buffer.extend(data)
         while b'\n' in self.buffer:
@@ -27,6 +29,7 @@ class Link:
             self.buffer = bytearray(remainder)
             self.lines.put_nowait(line.decode('ascii').rstrip('\r'))
 
+    # Découvre le distributeur, ouvre GATT puis active les notifications avant la première commande.
     async def connect(self):
         for attempt in range(3):
             try:
@@ -47,6 +50,7 @@ class Link:
                 print('Reconnexion Bluetooth Windows...', flush=True)
                 await asyncio.sleep(2)
 
+    # Envoie une commande par fragments et attend son ACK ou la fin d’une réponse multiligne.
     async def command(self, text, final=None):
         print('TX', text, flush=True)
         encoded = (text + '\n').encode('ascii')
@@ -76,6 +80,7 @@ def fields(line):
     return dict(part.split('=', 1) for part in line.split(';')[1:])
 
 
+# Utilise un emplacement libre et désactivé pour vérifier lecture, sauvegarde et suppression sans modifier les repas existants.
 async def main(reboot_port):
     link = Link()
     slot = None

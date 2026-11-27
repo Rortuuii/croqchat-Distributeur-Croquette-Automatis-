@@ -1,3 +1,4 @@
+/* Vérifie les échéances, la persistance et la synchronisation avec une horloge simulée. */
 /* Vrais scheduler/parseur/commandes/securite ; materiel et NVS simules. */
 #include "meal_scheduler.h"
 #include "ble_manager.h"

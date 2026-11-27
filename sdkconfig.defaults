@@ -1,3 +1,4 @@
+# Options ESP-IDF appliquées à la première configuration de la cible.
 CONFIG_BT_ENABLED=y
 CONFIG_BT_NIMBLE_ENABLED=y
 CONFIG_BT_NIMBLE_ROLE_PERIPHERAL=y

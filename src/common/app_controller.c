@@ -105,6 +105,7 @@ void app_controller_update(void)
     if (fonctions.activer_scheduler) {
         traiter_repas(arret || defaut);
     }
+    /* Le badge ne prend le moteur que si la distribution et la balance le laissent disponible. */
     bool disponible = fonctions.activer_balance && !defaut && !dispenser_controller_is_busy()
         && (!weight_manager_is_busy() || manual_badge_is_taring());
     if (fonctions.activer_badge_manuel) {

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f8fafc">
   <meta name="description" content="Pilotage Bluetooth BLE d'un distributeur de croquettes ESP32.">
+  <!-- Les styles de l’application mobile sont intégrés pour garder une page autonome. -->
   <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17213c;background:#eff3f9;font-synthesis:none;-webkit-tap-highlight-color:transparent}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}.app-shell{max-width:540px;min-height:100svh;margin:auto;background:linear-gradient(180deg,#fefefe 0%,#f8f9fd 46%,#f6f9fd 100%);box-shadow:0 0 50px #16264415;display:flex;flex-direction:column}.topbar{height:85px;display:flex;align-items:center;justify-content:space-between;padding:15px 21px 9px;background:#fff}.brand{display:flex;align-items:center;gap:11px}.brand-icon{font-size:35px;line-height:1}.brand-name{font-size:21px;font-weight:840;letter-spacing:-.9px}.brand-name span{color:#2779fa}.brand-sub{font-size:11px;color:#9ba4b8;margin-top:3px}.icon-button{border:0;background:#eff4ff;border-radius:12px;width:42px;height:42px;font-size:26px;color:#647b9a}.main{padding:12px 21px 102px;flex:1}.connection{display:flex;align-items:center;gap:8px;background:#e8f0ff;color:#315f9f;border-radius:13px;min-height:44px;padding:9px 11px;font-size:11.5px;font-weight:700;line-height:1.2}.connection.connected{background:#ddf9e9;color:#157447}.connection.connecting{background:#fef1c6;color:#836012}.conn-circle{flex-shrink:0;width:8px;height:8px;border-radius:50%;background:#4c87ec}.connected .conn-circle{background:#18aa67}.connect-link{margin-left:auto;background:#fff;border:1px solid #cbd8ff;padding:8px 10px;border-radius:9px;color:#2563eb;font-size:11px;font-weight:700;white-space:nowrap}.connected .connect-link{color:#18744d;border-color:#b6edcf}.notice{padding:11px 13px;margin-top:12px;border:1px solid #f2c9b8;background:#fff5ed;color:#a0522d;border-radius:12px;font-size:12px}.page{display:none}.page.active{display:block}.page-heading{display:flex;align-items:center;gap:13px;margin:19px 0 17px}.section-icon{display:grid;place-items:center;width:53px;height:53px;border-radius:50%;font-size:24px;flex-shrink:0}.warm{background:#ffecdf}.blue{background:#e5f1ff;color:#267bf3}.page-heading h1{font-size:24px;letter-spacing:-.7px;margin:0 0 3px;font-weight:800}.page-heading p{font-size:12px;color:#7d8aa5;margin:0}.meal-list{display:grid;gap:12px}.panel,.meal-card,.stat-card{background:#fff;border:1px solid #e9edf4;border-radius:18px;box-shadow:0 5px 19px #17213c0a}.meal-card{padding:17px 15px}.meal-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}.meal-title{font-size:15px;font-weight:800}.meal-top-right{display:flex;align-items:center;gap:9px}.switch-label{color:#6e7c99;font-size:11px}.remove-btn{border:0;color:#9ba6b9;background:none;font-size:20px;padding:0 3px}.toggle{appearance:none;width:35px;height:20px;border-radius:999px;background:#cfd7e7;position:relative;cursor:pointer;flex-shrink:0;transition:background .2s}.toggle:checked{background:#2276f2}.toggle:before{content:"";position:absolute;width:15px;height:15px;top:2.5px;left:3px;border-radius:50%;background:white;box-shadow:0 1px 4px #0002;transition:transform .2s}.toggle:checked:before{transform:translateX(14px)}.meal-details{display:grid;grid-template-columns:1fr 1fr;gap:11px}.meal-details label{font-size:10px;color:#7e8ba2;display:block;margin-bottom:6px}.meal-details input,.field-row input{border:1px solid #e7eaf1;background:#f5f7fb;color:#162b51;border-radius:10px;padding:11px 9px;width:100%;font-weight:750;font-size:14px}.meal-details .with-icon{display:flex;gap:9px;align-items:center}.detail-icon{font-size:19px;color:#6c85a5;flex-shrink:0}.actions{display:grid;gap:10px;margin-top:17px}.button{width:100%;min-height:46px;border:0;border-radius:12px;font-size:14px;font-weight:760;transition:filter .15s,transform .12s}.button:active{transform:scale(.99)}.button:hover{filter:brightness(.98)}.button:disabled{opacity:.48;cursor:not-allowed}.button-primary{background:linear-gradient(135deg,#358aff,#1e69ec);box-shadow:0 4px 11px #3079ef1a;color:#fff}.button-pale{background:#dcecff;color:#1b6ee5}.button-danger{background:#ed5261;color:white}.button-big{height:58px;font-size:16px}.hint{font-size:11px;line-height:1.55;color:#909bb0;margin:12px 3px}.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat-card{padding:17px 14px;min-width:0;background:#fff}.stat-label{font-size:11px;color:#697b99;font-weight:670}.stat-value{font-size:26px;font-weight:810;margin:10px 0 3px;letter-spacing:-1px}.stat-value small{font-size:16px;font-weight:700}.stat-help{font-size:10.5px;color:#98a2b6}.status-ready{font-size:20px;color:#119b63}.status-busy{font-size:18px;color:#c1851f}.status-fault{font-size:18px;color:#d23b4e}.panel{padding:18px 16px;margin-bottom:13px}.control-panel{margin-top:15px}.panel-title{font-size:14px;font-weight:780;margin-bottom:14px}.stepper{display:flex;gap:11px;margin-bottom:13px;height:64px}.stepper button{background:#e0efff;border:0;border-radius:13px;min-width:69px;font-size:27px;color:#1972f6;font-weight:500}.stepper div{flex:1;display:flex;justify-content:center;align-items:center;gap:4px;background:#f3f5f9;border-radius:13px;font-size:30px;font-weight:850}.stepper small{font-size:17px}.control-panel .button+.button{margin-top:10px}.recent{display:flex;align-items:center;justify-content:space-between;color:#4b6084;font-size:13px}.minor-heading{font-size:10.5px;color:#96a2b7;margin-bottom:4px}.recent-icon{font-size:22px;color:#aab4c7}.secondary{font-size:12px;color:#71809b;line-height:1.5;margin:3px 0 12px}.panel-split{display:flex;align-items:center;justify-content:space-between;gap:10px}.panel-split .panel-title{margin-bottom:5px}.small-button{width:86px;height:42px;min-height:42px;flex-shrink:0}.field-label{display:block;font-weight:700;font-size:12px;margin:15px 0 7px}.field-row{display:flex;gap:10px}.field-row input{width:41%;min-width:0}.field-row .button{flex:1}.helper{font-size:10.5px;color:#9ba4b4;margin-top:11px;line-height:1.5}.switch-row{display:flex;justify-content:space-between;align-items:center;gap:13px;padding:13px 0;font-size:12.5px;color:#55657e}.switch-row+.switch-row{border-top:1px solid #edf0f4}.switch-row input{accent-color:#2375f6;width:18px;height:18px}.details .detail-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;font-size:12px}.details .detail-row+.detail-row{border-top:1px solid #eef1f6}.detail-row span{color:#72829d}.detail-row strong{font-weight:750;text-align:right;max-width:55%;overflow-wrap:anywhere}.text-button{color:#2377f8;background:none;border:0;font-size:11px;font-weight:740}.logs{max-height:330px;overflow-y:auto}.log-item{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-top:1px solid #f0f2f7;font-size:11.5px;line-height:1.4;color:#586a88}.log-item time{white-space:nowrap;color:#9ba6ba;font-size:10px;margin-top:1px}.log-item div{overflow-wrap:anywhere;min-width:0}.log-item code{font-size:10.2px;color:#526b90}.log-dot{flex:0 0 7px;height:7px;background:#4a97e4;border-radius:50%;margin-top:4px}.log-dot.error{background:#e85769}.log-dot.recv{background:#12a770}.log-empty{font-size:12px;color:#9ba7bc;text-align:center;padding:18px 0}.tabbar{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px max(9px,env(safe-area-inset-bottom));background:#ffffffef;border-top:1px solid #e9eef7;box-shadow:0 -4px 16px #12264a0b;backdrop-filter:blur(10px)}.tab{border:0;background:none;display:flex;align-items:center;flex-direction:column;gap:4px;color:#8390a6;font-size:10px;font-weight:630;min-height:52px;justify-content:center}.tab.active{color:#196ef0;font-weight:800}.tab-icon{font-size:22px;line-height:1.2}.toast{position:fixed;z-index:10;bottom:85px;left:50%;transform:translateX(-50%) translateY(20px);max-width:min(90vw,480px);padding:12px 16px;border-radius:13px;background:#1d2a47;color:white;font-size:12px;line-height:1.45;box-shadow:0 6px 35px #12254755;pointer-events:none;opacity:0;transition:all .2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.toast.error{background:#ae3446}@media (min-width:700px){.app-shell{margin:30px auto;min-height:790px;border-radius:30px;overflow:hidden;border:1px solid #dfe6f1}.main{min-height:650px}.tabbar{bottom:0}}@media(max-width:360px){.main{padding-left:13px;padding-right:13px}.topbar{padding-left:13px;padding-right:13px}.stepper button{min-width:55px}.field-row{flex-wrap:wrap}.field-row input{width:100%}}
 
@@ -18,6 +19,7 @@
       <button class="icon-button" id="refresh-btn" title="Actualiser l’état" aria-label="Actualiser l’état">↻</button>
     </header>
 
+    <!-- Les vues partagent le même état BLE. La barre de navigation choisit la vue visible. -->
     <main class="main">
       <div class="connection" id="connection-banner"><span class="conn-circle" id="conn-dot"></span><span id="connection-text">Déconnecté — connecter le distributeur</span><button class="connect-link" id="connect-btn">Connecter</button></div>
       <div class="notice" id="notice" role="status" aria-live="polite" hidden></div>
@@ -62,6 +64,7 @@
       </section>
     </main>
 
+    <!-- Navigation entre le contrôle du distributeur, le planning et le diagnostic. -->
     <nav class="tabbar" aria-label="Navigation principale">
       <button data-tab="meals" class="tab active"><span class="tab-icon">🍴</span><span>Repas</span></button>
       <button data-tab="manual" class="tab"><span class="tab-icon">🐾</span><span>Manuel</span></button>
@@ -72,11 +75,13 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script>
 // Service GATT personnalisé : mêmes UUID dans include/croqchat_config.h.
+// Les UUID identifient le service et les deux caractéristiques du protocole CroqChat.
 const SERVICE_UUID = '32a44c10-fdd0-4b30-bb4b-5a8900000001';
 const RX_UUID         = '32a44c10-fdd0-4b30-bb4b-5a8900000002'; // téléphone -> ESP32
 const TX_UUID         = '32a44c10-fdd0-4b30-bb4b-5a8900000003'; // ESP32 -> téléphone
 const MAX_PACKET = 18; // 18 octets ASCII + fin de ligne : compatible BLE ATT MTU=23
 
+// Gère la connexion GATT, la fragmentation des messages et la corrélation entre commande et réponse.
 class FeederBLE {
   constructor(onLine, onDisconnected) {
     Object.assign(this, {onLine, onDisconnected, device:null, rx:null, tx:null,
@@ -87,6 +92,7 @@ class FeederBLE {
     this.onGATTDisconnected = this.onGATTDisconnected.bind(this);
   }
   get connected() { return Boolean(this.device?.gatt?.connected && this.rx && this.tx); }
+  // Sélectionne le périphérique, ouvre ses caractéristiques et active les notifications.
   async connect() {
     if (!navigator.bluetooth || !window.isSecureContext)
       throw new Error('Ouvrez cette application en HTTPS dans Chrome Android pour utiliser le Bluetooth.');
@@ -111,12 +117,14 @@ class FeederBLE {
     if(this.device?.gatt?.connected) this.device.gatt.disconnect();
     this.onGATTDisconnected();
   }
+  // Invalide les opérations associées à l’ancienne connexion et remet le tampon à zéro.
   onGATTDisconnected() {
     this.tx?.removeEventListener('characteristicvaluechanged',this.onNotify);
     this.rx=null; this.tx=null; this.buffer=''; ++this.generation;
     this.failPending(new Error('Connexion BLE perdue ; résultat de la commande inconnu.'));
     this.onDisconnected?.();
   }
+  // Une notification peut contenir une partie de ligne. Le tampon conserve les octets jusqu’au saut de ligne.
   onNotify(event) {
     const view=event.target.value;
     this.buffer+=this.decoder.decode(new Uint8Array(view.buffer,view.byteOffset,view.byteLength));
@@ -140,6 +148,7 @@ class FeederBLE {
       }
     }
   }
+  // Écrit les fragments dans l’ordre. Le numéro de génération empêche un ancien envoi de reprendre après reconnexion.
   async send(line) {
     if(!this.connected) throw new Error('ESP32 non connecté');
     if(!/^[\x20-\x7e]+$/.test(line) || line.length>256) throw new Error('Commande BLE invalide');
@@ -155,6 +164,7 @@ class FeederBLE {
     this.writeQueue=this.writeQueue.catch(()=>{}).then(operation);
     return this.writeQueue;
   }
+  // Sérialise les transactions et attend la réponse finale. STOP interrompt une commande en attente.
   request(line) {
     const command=line.split(';')[0];
     if(command==='STOP') {
@@ -181,6 +191,7 @@ class FeederBLE {
   }
 }
 
+// Sépare le type du message et les champs nommés, utilisés par les réponses et le diagnostic.
 function parseMessage(line) {
   const [type, ...parts] = line.trim().split(';');
   const fields = {};
@@ -192,6 +203,7 @@ function parseMessage(line) {
 }
 
 
+// Le cache local améliore l’affichage hors connexion. Le planning lu sur l’ESP32 fait foi.
 const safeStorage = (() => {
   const memory = new Map();
   return {
@@ -213,6 +225,7 @@ function loadMeals() {
     return Array.isArray(value) ? value.filter(m=>Number.isInteger(m.id)&&m.id>=1&&m.id<=6&&/^([01]\d|2[0-3]):[0-5]\d$/.test(m.time)&&Number.isFinite(m.mass)&&m.mass>=1&&m.mass<=200).filter((m,i,all)=>all.findIndex(x=>x.id===m.id)===i) : [];
   } catch {return [];}
 }
+// État partagé entre le transport BLE, les vues et les opérations en cours.
 const state = {
   bleConnected:false, meals:loadMeals(), portion:20,
   demoWeight:124, weight:null, busy:false, fault:0, calibrated:false, tared:false, clock:false, sensor:false,
@@ -231,6 +244,7 @@ function renderLog(){const el=$('event-log');el.replaceChildren();if (!state.log
 }
 function intRange(raw,min,max) { const n=Number(raw);return Number.isFinite(n)&&n>=min&&n<=max?n:null; }
 function formatNumber(n){return Number.isFinite(n)?n.toFixed(1).replace(/\.0$/,''):'—';}
+// Construit les champs de planification. Les modifications restent locales jusqu’à leur envoi.
 function renderMeals(){const el=$('meal-list');el.replaceChildren();if(!state.meals.length){const msg=document.createElement('p');msg.className='hint';msg.textContent='Aucun repas programmé sur le distributeur. Ajoutez votre premier repas.';el.append(msg);}for(const meal of state.meals){
   const card=document.createElement('div');card.className='meal-card';card.dataset.mealId=String(meal.id);
   const head=document.createElement('div');head.className='meal-top';
@@ -254,6 +268,7 @@ function renderMeals(){const el=$('meal-list');el.replaceChildren();if(!state.me
 }}
 function saveLocal(){safeStorage.setItem('croqchat.meals',JSON.stringify(state.meals));}
 function renderConnection(){const el=$('connection-banner');el.classList.toggle('connected',state.bleConnected);el.classList.toggle('connecting',false);$('connection-text').textContent=state.bleConnected?'BLE connecté — CroqChat ESP32':'Déconnecté — connecter le distributeur';$('connect-btn').textContent=state.bleConnected?'Déconnecter':'Connecter';$('diag-ble').textContent=state.bleConnected?'ESP32 connecté':'Déconnecté';}
+// Actualise les indicateurs et bloque les actions lorsque l’état BLE est périmé ou le matériel occupé.
 function renderStatus(){
  const connected=state.bleConnected, fresh=connected&&state.haveStatus&&Date.now()-state.lastStatus<12000;
  $('current-weight').textContent=formatNumber(fresh&&state.sensor&&state.calibrated&&state.tared?state.weight:null);
@@ -285,6 +300,7 @@ function renderStatus(){
 
 function openTab(tab){for(const el of document.querySelectorAll('.page'))el.classList.toggle('active',el.id===`page-${tab}`);for(const el of document.querySelectorAll('.tab'))el.classList.toggle('active',el.dataset.tab===tab);window.scrollTo({top:0,behavior:'smooth'});}
 const ble=new FeederBLE(onBleLine,()=>{state.bleConnected=false;state.haveStatus=false;state.loadingMeals=false;state.incomingMeals=null;state.weight=null;stopPolling();renderConnection();renderStatus();log('ESP32 déconnecté','error');toast('ESP32 déconnecté',true);});
+// Applique les messages d’état et remplace le planning affiché à la fin de la liste reçue.
 function onBleLine(line){if(state.showProtocol)log('← '+line,'recv');const {type,fields:f}=parseMessage(line);
  if(type==='STATUS'){
    const w=Number(f.w);state.weight=Number.isFinite(w)?w:null;state.haveStatus=true;state.lastStatus=Date.now();state.scale=f.scale!=='0';state.schedule=f.schedule!=='0';state.operationResult=Number(f.op)||0;
@@ -309,6 +325,7 @@ async function sendCommand(line){
 
 function stopPolling(){clearInterval(state.pollTimer);state.pollTimer=null;}
 async function refresh(){if(state.bleConnected){try{await sendCommand('GET_STATUS');}catch(e){handleError(e);}}else{renderStatus();}}
+// Envoie l’heure du téléphone et son décalage, puis vérifie que l’ESP32 confirme la synchronisation.
 async function syncTime(){
  const now=Math.floor(Date.now()/1000);
  const offset=-new Date().getTimezoneOffset();
@@ -317,6 +334,7 @@ async function syncTime(){
  if(parseMessage(status).fields.clock!=='1')throw new Error("L'ESP32 n'a pas confirme la synchronisation de l'heure.");
 }
 function handleError(error){toast(error.message||String(error),true);log(String(error.message||error),'error');}
+// Après chaque connexion, lit les fonctions disponibles, synchronise l’heure et charge le planning actif.
 $('connect-btn').addEventListener('click',async()=>{
  if(state.bleConnected){ble.disconnect();return;}
  const btn=$('connect-btn');btn.disabled=true;$('connection-banner').classList.add('connecting');$('connection-text').textContent='Recherche de l’ESP32…';
@@ -326,6 +344,7 @@ $('connect-btn').addEventListener('click',async()=>{
 $('refresh-btn').addEventListener('click',()=>refresh());
 for(const el of document.querySelectorAll('.tab'))el.addEventListener('click',()=>openTab(el.dataset.tab));
 $('add-meal-btn').addEventListener('click',()=>{if(state.meals.length>=MAX_MEALS)return toast('Maximum 6 repas',true);const used=new Set(state.meals.map(m=>m.id));const id=[1,2,3,4,5,6].find(n=>!used.has(n));state.meals.push({id,time:'12:00',mass:30,enable:true});state.meals.sort((a,b)=>a.id-b.id);saveLocal();renderMeals();});
+// Valide les repas, attend les confirmations du firmware, puis relit les valeurs enregistrées.
 $('save-meals-btn').addEventListener('click',async()=>{
  if(state.saving)return;
  state.saving=true;renderStatus();

@@ -1,3 +1,4 @@
+# Enregistre les modules du firmware et leurs dépendances ESP-IDF.
 idf_component_register(
     SRCS
         "main.c"

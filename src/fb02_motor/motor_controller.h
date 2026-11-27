@@ -1,3 +1,4 @@
+/* Commande non bloquante du moteur, vitesse en demi-pas par seconde. */
 /* Commande des quatre entrees du moteur pas a pas. */
 #ifndef MOTOR_CONTROLLER_H
 #define MOTOR_CONTROLLER_H

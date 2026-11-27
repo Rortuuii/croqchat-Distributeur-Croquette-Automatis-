@@ -1,3 +1,4 @@
+/* Déclarations NVS utilisées par les simulations de persistance. */
 #ifndef TEST_NVS_H
 #define TEST_NVS_H
 #include <stddef.h>

@@ -1,3 +1,4 @@
+/* Vérifie le coordinateur avec des périphériques simulés et les priorités entre demandes moteur. */
 /* Vrai coordinateur + vrai controle badge, autres blocs simules. */
 #include "app_controller.h"
 #include "manual_badge.h"

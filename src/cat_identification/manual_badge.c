@@ -7,6 +7,7 @@
 #include "esp_log.h"
 
 
+/* Le mode distingue la préparation de tare de la rotation. Un STOP reste mémorisé jusqu’au retrait du badge. */
 static bool mode_active;
 static bool actif, bloque_par_stop;
 static bool preparation;

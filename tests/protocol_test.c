@@ -1,3 +1,4 @@
+/* Exerce le découpage du flux et la validation des commandes du protocole BLE. */
 /* Tests portables : compiler avec un compilateur C natif, voir docs/tests-ble.md.
  * Aucune dependance ESP-IDF, aucun acces au materiel. */
 #include "ble_protocol.h"

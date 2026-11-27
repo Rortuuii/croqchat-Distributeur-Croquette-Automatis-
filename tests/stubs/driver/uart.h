@@ -1,3 +1,4 @@
+/* Interface UART minimale utilisée pour simuler le lecteur RFID. */
 #ifndef TEST_UART_H
 #define TEST_UART_H
 #include <stdint.h>

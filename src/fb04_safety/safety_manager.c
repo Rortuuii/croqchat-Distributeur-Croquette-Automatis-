@@ -10,12 +10,14 @@
 #include "esp_timer.h"
 #include <math.h>
 
+/* Le délai sans variation surveille le débit. Un écart d’au moins 1 g par rapport à la référence prolonge la surveillance. */
 #define DELAI_SANS_VARIATION_US INT64_C(10000000)
 #define VARIATION_MIN_GRAMMES 1.0f
 
 static bool surveillance_masse_active;
 static int64_t echeance_masse_us;
 static float masse_reference;
+/* Le premier défaut reste mémorisé et bloque le moteur jusqu’au réarmement. */
 static safety_fault_t defaut_actuel;
 static bool surveillance_active;
 static int64_t echeance_moteur_us;
@@ -54,6 +56,7 @@ void safety_manager_tick(void)
     }
     bool badge = manual_badge_is_active() && !manual_badge_is_taring();
     bool moteur_en_marche = motor_controller_is_running();
+    /* Le délai maximal couvre toute la distribution, y compris les pauses de la phase fine. */
     bool occupation = moteur_en_marche || distribution || badge;
     if (!occupation) surveillance_masse_active = false;
     if (!occupation) {

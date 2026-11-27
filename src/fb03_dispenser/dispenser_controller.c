@@ -15,6 +15,7 @@
 #define DUREE_IMPULSION_US 100000
 #define DUREE_PAUSE_US 200000
 
+/* La distribution passe par la tare, la rotation continue puis les impulsions près de la cible. */
 static dispenser_state_t etat = DISPENSER_IDLE;
 static float masse_depart;
 static float masse_cible; /* Quantite a ajouter, pas le poids total du bol. */

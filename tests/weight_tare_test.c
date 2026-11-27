@@ -1,3 +1,4 @@
+/* Simule le HX711 et la NVS pour exercer la tare et la calibration. */
 /* Vrai HX711 / WeightManager ; broches et NVS simulees. */
 #include "weight_manager.h"
 #include "driver/gpio.h"

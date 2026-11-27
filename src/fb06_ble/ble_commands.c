@@ -24,6 +24,7 @@ static bool operation_attendue;
 static uint32_t session_operation;
 static protocol_command_type_t type_operation;
 
+/* Envoie le résultat final quand la tare ou la calibration demandée par BLE est terminée. */
 static void terminer_operation(void)
 {
     if (!operation_attendue || weight_manager_is_busy()) return;
@@ -47,6 +48,7 @@ void ble_manager_set_features(bool balance, bool scheduler)
 }
 
 /* Place une commande recue dans la file de traitement. */
+/* Achemine STOP dans sa file prioritaire pour qu’il passe avant les commandes ordinaires. */
 static bool enqueue_command(const ble_command_event_t *evenement)
 {
     /* STOP dispose d'une boite dediee, independante d'une saturation des commandes. */
@@ -60,6 +62,7 @@ static void reply(uint32_t session, const char *ligne)
     if (erreur != ESP_OK) ESP_LOGW(ETIQUETTE_JOURNAL, "Reponse non transmise : %s", esp_err_to_name(erreur));
 }
 /* Execute la commande et prepare la reponse pour l application. */
+/* Vérifie la session et les fonctions activées avant de déléguer la commande au module concerné. */
 static void handle_command(const ble_command_event_t *evenement)
 {
     if (!ble_manager_session_active(evenement->session)) return;
@@ -184,6 +187,7 @@ esp_err_t ble_manager_start(void)
     return ble_manager_init(enqueue_command);
 }
 /* Traite les commandes en attente depuis la boucle principale. */
+/* Traite d’abord STOP, puis les commandes en attente et la fin des opérations asynchrones. */
 bool ble_manager_tick(void)
 {
     if (!file_commandes || !file_arret) return false;

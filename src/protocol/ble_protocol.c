@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Correspondance entre les noms de commandes du protocole et leurs identifiants internes. */
 static const char *const noms[] = {
     "GET_STATUS", "GET_MEALS", "SET_MEAL", "DELETE_MEAL", "MANUAL_FEED",
     "STOP", "TARE", "CALIBRATE", "RESET_FAULT", "SET_TIME"
@@ -20,6 +21,7 @@ void protocol_stream_reset(protocol_stream_t *flux)
     memset(flux, 0, sizeof(*flux));
 }
 /* Assemble les octets jusqu au saut de ligne et rejette les trames invalides. */
+/* Assemble une ligne à partir de fragments et écarte une trame invalide jusqu’à la prochaine fin de ligne. */
 void protocol_stream_feed(protocol_stream_t *flux, const uint8_t *donnees, size_t longueur,
                           protocol_line_cb_t traiter_ligne, protocol_error_cb_t traiter_erreur, void *contexte)
 {
@@ -50,6 +52,7 @@ void protocol_stream_feed(protocol_stream_t *flux, const uint8_t *donnees, size_
     }
 }
 /* Lit un entier et verifie ses limites. */
+/* Convertit un champ entier, vérifie ses bornes et rejette les caractères supplémentaires. */
 static bool integer(const char *valeur, int64_t minimum, int64_t maximum, int64_t *resultat)
 {
     if (!*valeur || (*valeur != '-' && (*valeur < '0' || *valeur > '9'))) return false;
@@ -64,6 +67,7 @@ static bool integer(const char *valeur, int64_t minimum, int64_t maximum, int64_
     return true;
 }
 /* Lit une masse positive et verifie sa limite maximale. */
+/* Accepte uniquement une masse finie et positive dans la plage du distributeur. */
 static bool mass(const char *valeur, float *resultat)
 {
     if (*valeur < '0' || *valeur > '9') return false;
@@ -75,6 +79,7 @@ static bool mass(const char *valeur, float *resultat)
     return true;
 }
 /* Verifie le nom et les parametres avant de construire une commande. */
+/* Valide le nom de la commande, les champs attendus et leurs valeurs avant exécution. */
 bool protocol_parse(const char *ligne, protocol_command_t *commande, const char **code_erreur)
 {
     *code_erreur = "BAD_FORMAT";

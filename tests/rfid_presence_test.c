@@ -1,3 +1,4 @@
+/* Simule les réponses UART pour vérifier l’UID, le retrait et l’expiration de présence. */
 /* Vrai pilote RFID ; transport UART simule, aucune action physique. */
 #include "cat_identification.h"
 #include "driver/uart.h"

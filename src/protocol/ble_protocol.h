@@ -1,3 +1,4 @@
+/* Types de commandes BLE et interfaces de décodage des trames. */
 /* Reconstruction des lignes recues et verification des commandes. */
 #ifndef BLE_PROTOCOL_H
 #define BLE_PROTOCOL_H

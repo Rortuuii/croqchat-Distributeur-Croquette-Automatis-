@@ -53,6 +53,7 @@ static const ble_uuid128_t uuid_emission = BLE_UUID128_INIT(
     0x03,0x00,0x00,0x00,0x89,0x5a,0x4b,0xbb,0x30,0x4b,0xd0,0xfd,0x10,0x4c,0xa4,0x32);
 
 /* Copie les informations de connexion protegees contre les acces simultanes. */
+/* Copie atomiquement l’état de la session entre les tâches BLE et la boucle applicative. */
 static connection_t connection_snapshot(void)
 {
     portENTER_CRITICAL(&verrou_etat);
@@ -67,6 +68,7 @@ bool ble_manager_session_active(uint32_t session)
     return etat.identifiant_connexion != BLE_HS_CONN_HANDLE_NONE && etat.session == session;
 }
 /* Place une ligne de reponse dans la file d emission. */
+/* Place une réponse complète dans la file d’émission de la session qui a envoyé la commande. */
 esp_err_t ble_manager_send_line(uint32_t session, const char *ligne)
 {
     if (!ligne || !file_emission) return ESP_ERR_INVALID_ARG;
@@ -91,6 +93,7 @@ esp_err_t ble_manager_send_line(uint32_t session, const char *ligne)
 }
 /* Les notifications s'executent dans la tache NimBLE, comme les evenements GAP.
  * Une deconnexion ne peut donc pas intercaler une nouvelle session dans un envoi. */
+/* Découpe les lignes en notifications BLE et reprend l’envoi quand la pile radio est disponible. */
 static void tx_tick(struct ble_npl_event *evenement)
 {
     (void)evenement;
@@ -132,6 +135,7 @@ static void tx_tick(struct ble_npl_event *evenement)
     ble_npl_callout_reset(&minuterie_emission, ble_npl_time_ms_to_ticks32(25));
 }
 /* Rend le distributeur visible pour une connexion Bluetooth. */
+/* Publie le service et le nom CroqChat pour la découverte par le téléphone. */
 static void advertise(void)
 {
     struct ble_hs_adv_fields champs = {0};
@@ -155,6 +159,7 @@ static void advertise(void)
     else ESP_LOGI(ETIQUETTE_JOURNAL, "Publicite activee / relancee ; attente de connexion");
 }
 /* Met a jour la connexion et son numero de session. */
+/* Attribue une nouvelle session pour invalider les messages de l’ancienne connexion. */
 static void set_connection(uint16_t identifiant_connexion)
 {
     portENTER_CRITICAL(&verrou_etat);
@@ -203,6 +208,7 @@ static int gap_event(struct ble_gap_event *evenement, void *argument)
     return 0;
 }
 /* Place les octets envoyes par l application dans la file de reception. */
+/* Le callback GATT place les écritures RX dans une file pour laisser le traitement à la tâche de réception. */
 static int gatt_access(uint16_t identifiant_connexion, uint16_t identifiant_attribut,
                        struct ble_gatt_access_ctxt *contexte, void *argument)
 {
@@ -258,6 +264,7 @@ static void received_line(const char *ligne, void *contexte)
     }
 }
 /* Assemble les fragments recus en lignes completes dans une tache dediee. */
+/* Reconstitue les lignes à partir des fragments de la session courante. */
 static void rx_task(void *argument)
 {
     (void)argument;
@@ -280,6 +287,7 @@ static void rx_task(void *argument)
     }
 }
 /* Lance l annonce Bluetooth lorsque la pile est prete. */
+/* Attend que NimBLE soit prêt avant de choisir l’adresse locale et d’annoncer le service. */
 static void on_sync(void)
 {
     int code_retour = ble_hs_util_ensure_addr(0);

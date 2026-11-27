@@ -1,3 +1,4 @@
+/* Interface de commande du moteur en mode manuel par badge. */
 /* Commande manuelle du moteur par badge, avec tare optionnelle avant demarrage. */
 #ifndef MANUAL_BADGE_H
 #define MANUAL_BADGE_H

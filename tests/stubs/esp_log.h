@@ -1,3 +1,4 @@
+/* Macros de journalisation compatibles avec les tests sans console ESP-IDF. */
 #ifndef TEST_ESP_LOG_H
 #define TEST_ESP_LOG_H
 #include <stdio.h>

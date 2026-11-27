@@ -1,3 +1,4 @@
+/* Vérifie la commande moteur par badge et les conditions de retrait, de tare et de STOP. */
 #include "manual_badge.h"
 #include "cat_identification.h"
 #include "croqchat_config.h"

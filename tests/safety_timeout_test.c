@@ -1,3 +1,4 @@
+/* Simule le temps, les mesures et le moteur pour contrôler les délais et le verrouillage des défauts. */
 /* Vrai SafetyManager, horloge et sorties simulees : aucun moteur physique. */
 #include "safety_manager.h"
 #include "dispenser_controller.h"

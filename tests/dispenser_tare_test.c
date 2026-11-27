@@ -1,3 +1,4 @@
+/* Vérifie que la distribution attend sa propre tare et s’arrête si elle échoue. */
 #include "dispenser_controller.h"
 #include "weight_manager.h"
 #include <assert.h>

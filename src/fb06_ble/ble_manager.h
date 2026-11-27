@@ -1,3 +1,4 @@
+/* Interface BLE, sessions de connexion et traitement des commandes dans la boucle applicative. */
 /* Connexion Bluetooth et transport des messages. */
 #ifndef BLE_MANAGER_H
 #define BLE_MANAGER_H

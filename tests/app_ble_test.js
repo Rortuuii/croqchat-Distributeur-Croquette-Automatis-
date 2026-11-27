@@ -1,3 +1,4 @@
+// Exécute l’application complète avec un DOM et un périphérique BLE simulés.
 // Execute tout le script de l'application avec DOM et GATT simules.
 const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');
 class Element {

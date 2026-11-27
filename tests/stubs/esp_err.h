@@ -1,3 +1,4 @@
+/* Codes ESP-IDF requis par les modules compilés dans les tests natifs. */
 #ifndef TEST_ESP_ERR_H
 #define TEST_ESP_ERR_H
 typedef int esp_err_t;

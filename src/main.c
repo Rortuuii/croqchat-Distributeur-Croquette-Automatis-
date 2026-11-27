@@ -10,12 +10,14 @@
 #include "storage.h"
 #include "weight_manager.h"
 
+/* Ces interrupteurs sélectionnent un essai au démarrage. Laisser les trois à zéro pour le distributeur complet. */
 #define TEST_BALANCE_BRUTE 0 /* Remettre a 0 pour le fonctionnement normal. */
 
 #define TEST_RFID_SEUL 0 /* CR95HF UART : affiche les UID dans le moniteur serie. */
 #define TEST_MOTEUR_CONTINU 0
 #define TEST_MOTEUR_VITESSE 500U /* Demi-pas par seconde, maximum 500. */
 
+/* Point d’entrée ESP-IDF. Chaque mode de test active uniquement les fonctions nécessaires à l’essai. */
 void app_main(void)
 {
 #if TEST_BALANCE_BRUTE
@@ -75,6 +77,7 @@ void app_main(void)
 #endif
         .afficher_balance = true,
     };
+    /* Le coordinateur initialise les périphériques, puis traite leurs événements sans bloquer la boucle principale. */
     app_controller_init(&options);
     while (true) {
         app_controller_update();

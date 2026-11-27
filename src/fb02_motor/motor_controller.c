@@ -5,6 +5,7 @@
 #include "driver/gpio.h"
 #include "esp_timer.h"
 
+/* Correspondance entre les sorties logiques du pilote et les quatre entrées du module ULN2003. */
 static const int broches[4] = {
     CROQCHAT_GPIO_MOTOR_IN1, CROQCHAT_GPIO_MOTOR_IN2,
     CROQCHAT_GPIO_MOTOR_IN3, CROQCHAT_GPIO_MOTOR_IN4
@@ -21,6 +22,7 @@ static const int sequence[8][4] = {
 static bool initialise = false;
 static bool en_marche = false;
 static int pas = 0;
+/* Échéance monotone du prochain demi-pas, exprimée en microsecondes. */
 static int64_t prochain_pas = 0;
 
 /* Avance les demi-pas a la vitesse demandee sans bloquer la boucle. */

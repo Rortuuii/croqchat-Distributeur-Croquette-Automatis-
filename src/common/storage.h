@@ -1,3 +1,4 @@
+/* Interface d’initialisation du stockage persistant NVS. */
 /* Ouverture de la memoire permanente qui conserve les reglages. */
 #ifndef CROQCHAT_STORAGE_H
 #define CROQCHAT_STORAGE_H
